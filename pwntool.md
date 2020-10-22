@@ -1,5 +1,23 @@
 # pwntoolメモ
 
+## example
+```python
+from pwn import *
+import sys
+
+if '-r' in sys.argv[1]:
+    p = remote("example.com", 10000)
+else:
+    p = process("./a.out")
+
+p.recvuntil(":")
+
+payload = "A"
+
+p.send(payload)
+p.interactive()
+```
+
 ## 初期化, attach
 ### local 
 ```python
