@@ -3,8 +3,7 @@
 ## syscall 呼び出し
 
 ### 32bit
-引数をレジスタ、足りない分はスタックへ設定。  
-int 0x80
+引数をレジスタ、足りない分はスタックへ設定し、`int 0x80`。  
 example:
 ```
 .intel_syntax noprefix
