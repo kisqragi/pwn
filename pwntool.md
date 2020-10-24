@@ -6,7 +6,7 @@ from pwn import *
 import sys
 
 argc = len(sys.argv)
-if argc >=2  && '-r' in sys.argv[1]:
+if argc >=2 and '-r' in sys.argv[1]:
     p = remote("example.com", 10000)
 else:
     p = process("./a.out")
