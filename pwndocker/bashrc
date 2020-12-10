@@ -1,0 +1,18 @@
+HISTSIZE=10000
+
+# alias configuration
+alias h="history"
+alias c="cd .."
+alias cp="cp -ri"
+alias ls='ls -F --color=auto'
+alias l='ls'
+alias la='ls -a'
+alias ll='ls -l'
+alias rm='rm -ri'
+alias mv='mv -i'
+alias gs='git status'
+alias gc='git commit'
+alias gl='git log'
+alias ga='git add'
+
+. ~/z/z.sh
