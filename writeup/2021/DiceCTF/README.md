@@ -13,7 +13,7 @@ https://libc.blukat.me/ でsymbolをwrite,addressに1d0をいれる。
 あとはそこからlibcをダウンロードするなりしてオフセットを計算してsystem("/bin/sh")して終了  
 
 # 参考
-http://inaz2.hatenablog.com/entry/2014/07/31/010158
+http://inaz2.hatenablog.com/entry/2014/07/31/010158  
 https://libc.blukat.me/
 
 # Writeup Blog
