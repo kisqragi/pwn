@@ -6,7 +6,6 @@ rop = ROP(elf)
 context.binary = binary
 
 local = True
-local = False
 
 if local:
     p = process(binary)
