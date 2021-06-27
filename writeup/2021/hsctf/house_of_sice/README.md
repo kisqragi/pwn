@@ -7,7 +7,7 @@ mallocの回数が16回という制限があるためfastbinを利用したDoubl
 そのため、tcacheにチャンクがあっても、fastbinを利用することができる。    
 
 ## 大まかな流れ
-1. 37,38,34,44行目の処理でtcacheを埋める
+1. `solve.py`の37,38,34,44行目の処理でtcacheを埋める
 2. 40,41,46,47,48でfastbinにチャンクを格納&Double Freeする
 3. 50,51でtcacheに2つ空きを作る
 4. 56でfastbinからチャンクを一つ取り、fastbinの末尾から二つをtcacheへ移動
