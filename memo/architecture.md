@@ -40,6 +40,11 @@ main:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;また、x86の関数呼び出しの場合、引数は全てスタックに積む。  
 
 ## システムコール番号
+### 定義場所
+```
+/usr/include/x86_64-linux-gnu/asm/unistd_64.h
+/usr/include/x86_64-linux-gnu/asm/unistd_32.h
+```
 
 ### ausyscall
 #### Install
