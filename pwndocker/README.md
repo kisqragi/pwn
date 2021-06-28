@@ -12,11 +12,3 @@ $ docker run --rm -it -v $(pwd):/ctf/work pwn
 ```
 $ docker run --cap-add=SYS_PTRACE --security-opt="seccomp=unconfined" --rm -it -v $(pwd):/ctf/work pwn
 ```
-
-## glibc2.31対応版one_gadgetを使う
-```
-$ cd /root/one_gadget
-$ bundle install --path vendor/bundle
-$ bundle exec one_gadget /path/to
-```
-
