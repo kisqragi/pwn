@@ -3,10 +3,8 @@
 ## example
 ```python
 from pwn import *
-import sys
 
-argc = len(sys.argv)
-if argc >=2 and '-r' in sys.argv[1]:
+if args.REMOTE:
     p = remote("example.com", 10000)
 else:
     p = process("./a.out")
@@ -17,6 +15,10 @@ payload = "A"
 
 p.send(payload)
 p.interactive()
+```
+```
+$ python3 example.py REMOTE // リモート
+$ python3 example.py        // ローカル
 ```
 
 ## 初期化, attach
