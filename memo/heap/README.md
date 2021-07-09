@@ -7,3 +7,10 @@ fd -> fd -> ..
 そのためfastbinから移動してきた時は値が0x10増えている
 
 fastbinのチャンクのfdは次のチャンクの先頭を指している(次のチャンクのfdを指しているわけではない)
+
+# リンクの順序
+## LIFO
+* tcache
+* fastbin
+## FIFO
+* unsorted bin
