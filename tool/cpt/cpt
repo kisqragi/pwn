@@ -1,0 +1,124 @@
+#!python3
+from argparse import ArgumentParser
+import os
+import subprocess
+import sys
+
+HOST         = 'localhost'
+PORT         = 10000
+CHALL        = 'chall'
+REMOTE_LIBC  = 'libc.so.6'
+LOCAL_LIBC   = '/lib/x86_64-linux-gnu/libc.so.6'
+CHECKSEC     = 'False'
+ELF_MAGIC_NUMBER = b'\x7FELF'
+
+def get_option():
+    argparser = ArgumentParser()
+    argparser.add_argument(
+        'host', type=str,
+        nargs='?',
+        default=HOST,
+        help='Specify the host'
+    )
+    argparser.add_argument(
+        'port', type=int,
+        nargs='?',
+        default=PORT,
+        help='Specify the port'
+    )
+    argparser.add_argument(
+        '--file', type=str,
+        help='Specify the challenge file'
+    )
+    argparser.add_argument(
+        '--libc', type=str,
+        help='Specify the libc'
+    )
+    argparser.add_argument(
+        '--checksec', action='store_true',
+        help='Specify this option if you want to enable checksec'
+    )
+
+    return argparser.parse_args()
+
+def check_option(args):
+    global CHALL, REMOTE_LIBC, PORT, HOST, CHECKSEC
+
+    if args.file:
+        CHALL = args.file
+    if args.libc:
+        REMOTE_LIBC = args.libc
+    if args.port:
+        PORT = args.port
+    if args.host:
+        HOST = args.host
+    if args.checksec:
+        CHECKSEC = 'True'
+
+def output_template():
+    template = f'''
+from pwn import *
+elf = ELF('{CHALL}', checksec={CHECKSEC})
+context.binary = elf
+
+if args.REMOTE:
+    s = remote('{HOST}', {PORT})
+    libc = ELF('{REMOTE_LIBC}', checksec={CHECKSEC})
+else:
+    s = process('{CHALL}')
+    libc = ELF('{LOCAL_LIBC}', checksec={CHECKSEC})
+
+s.interactive()
+'''[1:]
+
+    with open('solve.py', 'w') as f:
+        f.write(template)
+
+def patch():
+    for name in os.listdir():
+        if name.startswith('ld-') and '.so' in name:
+            try:
+                cmd = [
+                    'patchelf', '--set-rpath', './',
+                    '--set-interpreter', f'./{name}', f'{CHALL}'
+                ]
+                res = subprocess.call(cmd)
+                if res != 0:
+                    print('Error: patchelf could not be executed.', file=sys.stderr)
+                    sys.exit(res)
+                else:
+                    global LOCAL_LIBC
+                    LOCAL_LIBC = REMOTE_LIBC
+            except FileNotFoundError:
+                print("Error: No such file or directory: 'patchelf'", file=sys.stderr)
+                sys.exit(1)
+                
+def libc():
+    global REMOTE_LIBC
+    for name in os.listdir():
+        if name.startswith('libc') and '.so' in name:
+            REMOTE_LIBC = name
+
+def chall():
+    global CHALL
+    for name in os.listdir():
+        f = open(name, 'rb')
+        magic = f.read(4)
+        if ELF_MAGIC_NUMBER == magic:
+            if 'ld' not in name and 'libc' not in name:
+                CHALL = name
+        f.close() 
+
+def init():
+    libc()
+    chall()
+    args = get_option()
+    check_option(args)
+    patch()
+
+def main():
+    init()
+    output_template()
+
+if __name__ == '__main__':
+    main()
