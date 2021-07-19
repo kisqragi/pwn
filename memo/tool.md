@@ -16,5 +16,5 @@ $ gdb -ex 'target remote localhost:10001' -ex 'b main'
 
 # socat
 ```
-$socat tcp-l:10000,reuseaddr,fork system:./chall
+$ socat tcp-l:10000,reuseaddr,fork system:./chall
 ```
