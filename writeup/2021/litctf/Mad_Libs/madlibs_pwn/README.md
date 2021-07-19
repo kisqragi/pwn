@@ -1,0 +1,2 @@
+sprintfした結果がbufの領域を越えるためbuffer overflowができる  
+returnアドレスにうまくwinのアドレスが書き込めるように文字列の長さを調節する  
