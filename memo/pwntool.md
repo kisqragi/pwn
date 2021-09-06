@@ -95,3 +95,11 @@ shellcode = asm(shellcraft.sh())
 p.send(shellcode)
 ```
 
+## tmux
+```
+docker exec -it hoge tmux
+```
+```
+context.terminal = ['tmux', 'splitw', '-h', '-F' '#{pane_pid}', '-P']
+```
+https://github.com/Gallopsled/pwntools/issues/1874#issuecomment-832075311  
