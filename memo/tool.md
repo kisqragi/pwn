@@ -31,3 +31,9 @@ gdb -ex 'target remote localhost:10001' -ex 'b main'
 ```sh
 socat tcp-l:10000,reuseaddr,fork system:./chall
 ```
+
+# gdb
+## アドレスを指定して文字列で表示する
+```sh
+x/s 0x555555550000
+```
